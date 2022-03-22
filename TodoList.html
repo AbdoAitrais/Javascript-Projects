@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>To do list</title>
+</head>
+<style type="text/css">
+  body{
+    background-color: #ddd;
+  }
+  li{
+    cursor: pointer;
+  }
+  p{
+    cursor: pointer;
+  }
+  .list-group-item:hover{
+    background-color: #ddd;
+  }
+  .some{
+    display: flex;
+    width: 100%;
+    padding-top: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    align-content: center;
+    padding-bottom: 5%;
+    background-color: #f44336;
+    flex-direction: column;
+
+  }
+  .big{
+    border: 1px solid #888;
+    border-radius: 2px;
+    margin-top: 10%;
+    margin-left: 25%;
+    width: 50%;
+    height: 70%;
+  }
+  .btn-close{
+    position: absolute;
+    left: 92%;
+  }
+  .btn-close:focus{
+    box-shadow: none;
+  }
+  .btn-close:hover{
+    box-shadow: 0 0 0 0.25rem #f44336;
+  }
+  p{
+  position: relative;
+  
+  padding: 0.5rem 2rem;
+  color: #212529;
+  
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  
+}
+p:hover{
+  z-index: 1;
+  color: #495057;
+  text-decoration: none;
+  background-color: #f8f9fa;
+}
+p.checked {
+  text-decoration: line-through;
+}
+.titre{
+  color: #6c757d;
+}
+
+</style>
+<body>
+
+<div class="big">
+  <div class="some">
+    <center><h1 class="titre">TO DO LIST</h1></center>
+    
+      <div class="input-group">
+        
+          <input type="text" aria-label="todo" id = "todo" class="form-control" placeholder="Add New Task ..">
+          <button type="button" class="btn btn-secondary" onclick="newElement();">ADD</button>
+      </div>
+      
+    </div>
+<div id="elementList" class="list-group">
+  <p>
+    <span>Click Task To Check</span>
+    
+    <button type="button" class="btn-close" aria-label="Close"></button>
+  </p>
+  
+</div>
+</div>
+
+<script type="text/javascript">
+
+  var closeb = document.getElementsByClassName('btn-close');
+  var span = document.getElementsByTagName('SPAN');
+
+
+  function UpdateState(){
+    for (var i = 0; i < closeb.length; i++) {
+    closeb[i].onclick = function(){
+      var label = this.parentElement;
+      label.style.display = "none";
+    }
+  }
+  
+  for (var i = 0; i < span.length; i++) {
+    span[i].onclick = function(){
+      var span = this.parentElement;
+      
+      if (localStorage.getItem('isChecked') == null) {
+        localStorage.setItem('isChecked','true');
+        span.className = "checked";
+      }
+      else if(localStorage.getItem('isChecked') == 'true')
+      {
+        localStorage.setItem('isChecked','false');
+        span.classList.remove("checked");
+      }
+      else if(localStorage.getItem('isChecked') == 'false')
+      {
+        localStorage.setItem('isChecked','true');
+        span.className = "checked";
+      }
+      
+    }
+  }
+  }
+
+  UpdateState();
+  
+
+
+
+  function newElement() {
+    var todo = document.getElementById('todo').value ;
+    var p = document.createElement('P');
+    var text = document.createTextNode(todo);
+    var button = document.createElement('BUTTON');
+    var span = document.createElement('SPAN');
+
+    
+    button.className = "btn-close";
+    span.appendChild(text);
+    p.appendChild(span);
+    p.appendChild(button);
+
+    if(todo === '')
+    {
+      alert("Vous devez remplir le text !");
+    }
+    else
+    {
+      document.getElementById("elementList").appendChild(p);
+    }
+    UpdateState();
+  }
+
+  function suppElement(){
+
+  }
+</script>
+
+</body>
+</html>
